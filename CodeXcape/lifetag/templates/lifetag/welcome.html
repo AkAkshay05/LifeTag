@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LifeTag - Your Health, Secured & Accessible</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Background particles */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .particle:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-delay: 0s; }
+    .particle:nth-child(2) { width: 120px; height: 120px; left: 20%; animation-delay: 2s; }
+    .particle:nth-child(3) { width: 60px; height: 60px; left: 70%; animation-delay: 4s; }
+    .particle:nth-child(4) { width: 100px; height: 100px; left: 80%; animation-delay: 1s; }
+    .particle:nth-child(5) { width: 40px; height: 40px; left: 30%; animation-delay: 3s; }
+    .particle:nth-child(6) { width: 90px; height: 90px; left: 60%; animation-delay: 5s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+      50%      { transform: translateY(-100px) rotate(180deg); opacity: 0.8; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .welcome-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 60px 50px;
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transform: translateY(20px);
+      animation: slideUp 1s ease-out forwards;
+    }
+
+    @keyframes slideUp {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .logo-container {
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .logo {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 48px;
+      color: white;
+      box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.05); }
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 20px;
+      letter-spacing: -2px;
+    }
+
+    .tagline {
+      font-size: 1.3rem;
+      color: #666;
+      margin-bottom: 40px;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    .description {
+      font-size: 1.1rem;
+      color: #555;
+      margin-bottom: 50px;
+      line-height: 1.8;
+      text-align: left;
+    }
+
+    .feature-list {
+      list-style: none;
+      margin-bottom: 40px;
+    }
+
+    .feature-list li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      font-size: 1rem;
+      color: #444;
+    }
+
+    .feature-list li::before {
+      content: "✓";
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      font-weight: bold;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 18px 50px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+      border: none;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-button::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .cta-button:hover::before {
+      left: 100%;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 25px 50px rgba(102, 126, 234, 0.6);
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      margin: 50px 0 40px;
+      padding: 30px 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #667eea;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 5px;
+    }
+
+    .emergency-badge {
+      background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 30px;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { box-shadow: 0 0 20px rgba(255, 107, 107, 0.3); }
+      to   { box-shadow: 0 0 30px rgba(255, 107, 107, 0.6); }
+    }
+
+    @media (max-width: 768px) {
+      .welcome-card {
+        padding: 40px 30px;
+        margin: 20px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      .tagline {
+        font-size: 1.1rem;
+      }
+
+      .stats {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .cta-button {
+        width: 100%;
+        padding: 20px 40px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <div class="container">
+    <div class="welcome-card">
+      <div class="logo-container">
+        <div class="logo">❤️</div>
+        <div class="emergency-badge">🚨 Emergency Ready</div>
+      </div>
+
+      <h1>LifeTag</h1>
+      <div class="tagline">Your Health, Secured & Accessible</div>
+
+      <div class="description">
+        <p><strong>LifeTag</strong> is an innovative health monitoring system that puts your cardiac health information at your fingertips. Using advanced machine learning algorithms, we assess your heart disease risk and generate a personalized QR code for instant access to your health profile — perfect for emergencies, hospital visits, or routine check-ups.</p>
+      </div>
+
+      <ul class="feature-list">
+        <li>AI-Powered Heart Disease Risk Assessment</li>
+        <li>Instant QR Code Generation for Quick Access</li>
+        <li>Emergency-Ready Health Profiles</li>
+        <li>Secure & Private Health Data Management</li>
+        <li>Hospital & Healthcare Professional Integration</li>
+        <li>Real-time Health Analytics & Insights</li>
+      </ul>
+
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-number">98%</span>
+          <div class="stat-label">Accuracy Rate</div>
+        </div>
+        <div class="stat">
+          <span class="stat-number">&lt;5s</span>
+          <div class="stat-label">Assessment Time</div>
+        </div>
+        <div class="stat">
+          <span class="stat-number">24/7</span>
+          <div class="stat-label">Availability</div>
+        </div>
+      </div>
+
+      <a href="http://127.0.0.1:8000/lifetag/" class="cta-button">
+        Start Your Health Assessment
+      </a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LifeTag - Smart Medical ID</title>
+  <style>
+    :root {
+      --accent: #76c7c0;
+      --bg-gradient-light: linear-gradient(135deg, #e0eafc, #cfdef3);
+      --bg-gradient-dark: linear-gradient(135deg, #1e1e2f, #2c3e50);
+      --card-bg-light: rgba(255, 255, 255, 0.25);
+      --card-bg-dark: rgba(20, 20, 20, 0.3);
+      --text-light: #222;
+      --text-dark: #eee;
+    }
+
+    [data-theme="light"] {
+      --bg-gradient: var(--bg-gradient-light);
+      --card-bg: var(--card-bg-light);
+      --text-color: var(--text-light);
+    }
+
+    [data-theme="dark"] {
+      --bg-gradient: var(--bg-gradient-dark);
+      --card-bg: var(--card-bg-dark);
+      --text-color: var(--text-dark);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg-gradient);
+      overflow: hidden;
+      color: var(--text-color);
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    .container {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 40px 30px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+      animation: fadeInUp 0.8s ease-out;
+      transition: background 0.4s ease;
+    }
+
+    .logo-circle {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 20px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      color: white;
+      box-shadow: 0 4px 15px rgba(118, 199, 192, 0.4);
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    .tagline {
+      font-size: 1rem;
+      margin-bottom: 16px;
+    }
+
+    p.description {
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 10px 25px;
+      border-radius: 30px;
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(118, 199, 192, 0.3);
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(118, 199, 192, 0.4);
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .particles {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
+      animation: float 7s ease-in-out infinite;
+    }
+
+    .particle:nth-child(1) { width: 50px; height: 50px; top: 20%; left: 15%; animation-delay: 0s; }
+    .particle:nth-child(2) { width: 30px; height: 30px; top: 65%; left: 70%; animation-delay: 2s; }
+    .particle:nth-child(3) { width: 40px; height: 40px; top: 40%; left: 85%; animation-delay: 4s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); opacity: 0.4; }
+      50% { transform: translateY(-20px); opacity: 0.8; }
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-color);
+      transition: color 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body data-theme="light">
+
+
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <div class="container">
+      <button class="theme-toggle" onclick="toggleTheme()" title="Switch theme">🌙 theme</button>
+    <div class="glass-card">
+      <div class="logo-circle">❤️</div>
+      <h1>LifeTag</h1>
+      <div class="tagline">Your Medical ID — Anywhere, Instantly</div>
+      <p class="description">
+        A single scan connects rescuers to your medical profile, allergies, conditions, and emergency contacts. Stay protected 24/7.
+      </p>
+      <a href="http://127.0.0.1:8000/lifetag/" class="cta-btn">Get Started</a>
+    </div>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      const isDark = body.getAttribute('data-theme') === 'dark';
+      body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+      document.querySelector('.theme-toggle').textContent = isDark ? '🌙' : '☀️';
+    }
+
+    // Load saved theme
+    window.onload = () => {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.body.setAttribute('data-theme', savedTheme);
+      document.querySelector('.theme-toggle').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+    }
+  </script>
+</body>
+</html>

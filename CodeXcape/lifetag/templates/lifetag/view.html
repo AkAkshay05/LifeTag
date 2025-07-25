@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeTag Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9fafb;
+            padding: 20px;
+        }
+        .profile {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c5aa0;
+            text-align: center;
+        }
+        .info {
+            list-style: none;
+            padding: 0;
+        }
+        .info li {
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile">
+        <h1>{{ profile.name }}</h1>
+        <ul class="info">
+            <li><strong>Guardian Phone:</strong> {{ profile.guardian_phone }}</li>
+            <li><strong>Address:</strong> {{ profile.address }}</li>
+            <li><strong>Blood Type:</strong> {{ profile.blood_type }}</li>
+            <li><strong>Allergies:</strong> {{ profile.allergies }}</li>
+            <li><strong>Description:</strong> {{ profile.description }}</li>
+            <li><strong>Predicted Risk:</strong> {{ profile.risk_level }}</li>
+        </ul>
+    </div>
+</body>
+</html>

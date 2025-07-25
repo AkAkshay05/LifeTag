@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Medical Risk Assessment Result</title>
+<style>
+    * {
+        margin: 0; padding: 0; box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #333;
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        padding: 40px 50px;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 2.8em;
+        color: #2c5aa0;
+        margin-bottom: 15px;
+        font-weight: 700;
+    }
+
+    h2 {
+        font-size: 1.8em;
+        font-weight: 600;
+        color: #2c5aa0;
+        margin-bottom: 25px;
+        border-bottom: 3px solid #e2e8f0;
+        padding-bottom: 12px;
+    }
+
+    .section {
+        margin-bottom: 40px;
+    }
+
+    ul.data-list {
+        list-style: none;
+        padding-left: 0;
+        border-radius: 15px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        overflow: hidden;
+    }
+
+    ul.data-list li {
+        display: flex;
+        justify-content: space-between;
+        padding: 16px 24px;
+        border-bottom: 1px solid #e2e8f0;
+        font-size: 1.1em;
+        color: #4a5568;
+        font-weight: 600;
+        transition: background 0.2s ease;
+    }
+    ul.data-list li:nth-child(even) {
+        background: #f0f4ff;
+    }
+    ul.data-list li:last-child {
+        border-bottom: none;
+    }
+
+    .data-label {
+        color: #2c5aa0;
+    }
+
+    .risk-level {
+        text-align: center;
+        font-size: 3em;
+        font-weight: 700;
+        padding: 20px 0;
+        border-radius: 20px;
+        color: white;
+        max-width: 400px;
+        margin: 0 auto;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        user-select: none;
+    }
+
+    /* Risk level colors */
+    .risk-low {
+        background: linear-gradient(45deg, #059669, #047857);
+    }
+    .risk-moderate {
+        background: linear-gradient(45deg, #d97706, #b45309);
+    }
+    .risk-high {
+        background: linear-gradient(45deg, #dc2626, #991b1b);
+    }
+
+    .btn-container {
+        text-align: center;
+        margin-top: 50px;
+    }
+
+    .btn {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 18px 50px;
+        border-radius: 50px;
+        font-size: 1.25em;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+        user-select: none;
+    }
+
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+    }
+
+    .btn:active {
+        transform: translateY(0);
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Medical Risk Assessment Result</h1>
+        <div class="section">
+            <h2>Predicted Risk Level</h2>
+            <div class="risk-level
+                {% if risk_level == 'Low Risk' %} risk-low
+                {% elif risk_level == 'Moderate Risk' %} risk-moderate
+                {% elif risk_level == 'High Risk' %} risk-high
+                {% else %} risk-moderate{% endif %}
+            ">
+                {{ risk_level }}
+            </div>
+        </div>
+        <div class="section">
+            <h2>Patient Submitted Data</h2>
+            <ul class="data-list">
+                <li><span class="data-label">Age:</span> <span>{{ data.age }}</span></li>
+                <li><span class="data-label">Sex:</span> <span>{% if data.sex == 1 %}Male{% else %}Female{% endif %}</span></li>
+                <li><span class="data-label">Chest Pain Type:</span>
+                    <span>
+                    {% if data.cp == 0 %}Typical Angina
+                    {% elif data.cp == 1 %}Atypical Angina
+                    {% elif data.cp == 2 %}Non-Anginal Pain
+                    {% elif data.cp == 3 %}Asymptomatic
+                    {% else %}Unknown{% endif %}
+                    </span>
+                </li>
+                <li><span class="data-label">Exercise Induced Angina:</span> <span>{% if data.exang == 1 %}Yes{% else %}No{% endif %}</span></li>
+                <li><span class="data-label">Resting Blood Pressure (mm Hg):</span> <span>{{ data.trestbps }}</span></li>
+                <li><span class="data-label">Maximum Heart Rate Achieved:</span> <span>{{ data.thalach }}</span></li>
+                <li><span class="data-label">Serum Cholesterol (mg/dl):</span> <span>{{ data.chol }}</span></li>
+                <li><span class="data-label">Fasting Blood Sugar > 120 mg/dl:</span> <span>{% if data.fbs == 1 %}Yes{% else %}No{% endif %}</span></li>
+                <li><span class="data-label">Resting ECG Results:</span>
+                    <span>
+                    {% if data.restecg == 0 %}Normal
+                    {% elif data.restecg == 1 %}ST-T Abnormality
+                    {% elif data.restecg == 2 %}Left Ventricular Hypertrophy
+                    {% else %}Unknown{% endif %}
+                    </span>
+                </li>
+                <li><span class="data-label">Oldpeak (ST Depression):</span> <span>{{ data.oldpeak }}</span></li>
+                <li><span class="data-label">Slope of Peak Exercise ST Segment:</span>
+                    <span>
+                    {% if data.slope == 0 %}Upsloping
+                    {% elif data.slope == 1 %}Flat
+                    {% elif data.slope == 2 %}Downsloping
+                    {% else %}Unknown{% endif %}
+                    </span>
+                </li>
+                <li><span class="data-label">Number of Major Vessels:</span> <span>{{ data.ca }}</span></li>
+                <li><span class="data-label">Thalassemia Type:</span>
+                    <span>
+                    {% if data.thal == 1.0 %}Fixed Defect
+                    {% elif data.thal == 2.0 %}Normal
+                    {% elif data.thal == 3.0 %}Reversible Defect
+                    {% else %}Unknown{% endif %}
+                    </span>
+                </li>
+            </ul>
+        </div>
+
+
+
+        <div class="btn-container">
+            <a href="{% url 'medical_form' %}" class="btn">📝 New Assessment</a>
+        </div>
+    </div>
+</body>
+</html>
